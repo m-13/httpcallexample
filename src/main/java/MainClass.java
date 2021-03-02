@@ -1,24 +1,27 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
+// import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+// import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class MainClass {
     public static void main(String[] args) throws JsonProcessingException, UnsupportedEncodingException {
-        HttpClient client = new DefaultHttpClient();
+        // HttpClient client = new DefaultHttpClient();
+        CloseableHttpClient client = HttpClientBuilder.create().build();
+
         HttpPost post = new HttpPost("https://matrix-api.awign.com/api/v2/projects/602cc3985accab3b961e3552/leads");
+        post.addHeader("Content-Type","application/json");
         post.addHeader("access-token","PLEASE_ADD_IT_REMOVED_FOR_SECURITY");
         post.addHeader("client","PLEASE_ADD_IT_REMOVED_FOR_SECURITY");
-        post.addHeader("uid","PLEASE_ADD_IT_REMOVED_FOR_SECURITY");
+        post.addHeader("uid","PLEASE_ADD_IT_REMOVED_FOR_SECURITY");                     
         post.addHeader("X-CLIENT_ID","PLEASE_ADD_IT_REMOVED_FOR_SECURITY");
-        post.addHeader("Content-Type","application/json");
-
 
         ModerationData data = ModerationData.builder()
                 .name("ReportedVideoJob")
@@ -39,7 +42,10 @@ public class MainClass {
         try {
             response = client.execute(post);
             int statusCode = response.getStatusLine().getStatusCode();
+            String responseJson = response.toString();
             System.out.println("Status Code is : " + statusCode);
+            System.out.println("Response is : " + responseJson);
+
             if (statusCode != 201)
             {
                 throw new RuntimeException("Failed with HTTP error code : " + statusCode);

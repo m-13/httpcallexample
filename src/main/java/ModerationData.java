@@ -27,15 +27,15 @@ public class ModerationData {
     @JsonProperty("reason_mitron")
     private String reason;
 
-    @JsonProperty("status")
-    private String status;
+    // @JsonProperty("status")
+    // private String status;
 
     @JsonProperty("type_of_environment")
     private String typeOfEnvironment;
 
-    @JsonProperty("_id")
-    private String leadId;
+    // @JsonProperty("_id")
+    // private String leadId;
 
-    @JsonProperty("project_id")
-    private String projectId;
+    // @JsonProperty("project_id")
+    // private String projectId;
 }
